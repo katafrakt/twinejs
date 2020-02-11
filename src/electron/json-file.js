@@ -28,6 +28,8 @@ const JsonFile = {
 	}
 };
 
+export const load = JsonFile.load;
+export const save = JsonFile.save;
 export default JsonFile;
 
 ipcMain.on('save-json', (e, filename, data) => {

@@ -160,6 +160,8 @@ const StoryFile = {
 	}
 };
 
+export const load = StoryFile.load;
+export const save = StoryFile.save;
 export default StoryFile;
 
 /*

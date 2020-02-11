@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import klaw from 'klaw-sync';
 import {say} from '../locale';
 import mkdirp from 'mkdirp-promise';
-import path from 'path';
+import _path from 'path';
 
 const StoryDirectory = {
 	/*
@@ -11,7 +11,7 @@ const StoryDirectory = {
 	*/
 
 	path() {
-		return path.join(app.getPath('documents'), say('Twine'), say('Stories'));
+		return _path.join(app.getPath('documents'), say('Twine'), say('Stories'));
 	},
 
 	/*
@@ -64,7 +64,7 @@ const StoryDirectory = {
 			return fs.readdir(storyPath).then(files => {
 				return Promise.all(
 					/* a+w, 0666 */
-					files.map(f => fs.chmod(path.join(storyPath, f), 438))
+					files.map(f => fs.chmod(_path.join(storyPath, f), 438))
 				);
 			});
 		} else {
@@ -93,7 +93,7 @@ const StoryDirectory = {
 		// eslint-disable-next-line no-console
 		console.log('Backing up story library');
 
-		const backupPath = path.join(
+		const backupPath = _path.join(
 			app.getPath('documents'),
 			say('Twine'),
 			say('Backups')
@@ -103,7 +103,7 @@ const StoryDirectory = {
 		return fs
 			.copy(
 				StoryDirectory.path(),
-				path.join(
+				_path.join(
 					backupPath,
 					`${now.getFullYear()}-${now.getMonth() +
 						1}-${now.getDate()} ${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}-${now.getMilliseconds()}`
@@ -142,4 +142,9 @@ const StoryDirectory = {
 	}
 };
 
+export const unlock = StoryDirectory.unlock;
+export const backup = StoryDirectory.backup;
+export const lock = StoryDirectory.lock;
+export const create = StoryDirectory.create;
+export const path = StoryDirectory.path;
 export default StoryDirectory;
